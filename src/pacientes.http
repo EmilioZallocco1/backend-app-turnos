@@ -1,0 +1,32 @@
+### obtener todos los characters
+GET http://localhost:4200/api/pacientes
+
+
+### obtener un characters segun el id
+GET http://localhost:4200/api/pacientes/5
+
+### Crear uno nuevo
+POST http://localhost:4200/api/pacientes
+Content-Type: application/json
+
+    {
+        "id": 2,
+        "nombre": "Ramon",
+        "edad": 33
+    }
+
+
+
+
+### Modificar un character (put - recurso completo e idempotente).
+PUT http://localhost:4200/api/pacientes/5
+Content-Type: application/json
+
+{
+    "nombre": "Fpapdappda",
+    "edad": 54
+    
+    
+}
+  
+
