@@ -1,9 +1,23 @@
+import 'reflect-metadata';
 import express from "express";
 import { Paciente } from "./paciente.js";
+import { orm,synsSchema } from './db/orm.js';
+import { RequestContext } from '@mikro-orm/core';
+
 
 
 const app = express();
 app.use(express.json())
+
+
+//luego de los middleware base 
+
+app.use((req, res, next) => {
+  RequestContext.create(orm.em, next);
+})
+
+//antes de las rutas y middlewares de nuestro proyecto
+
 
 //get: obtener informacion sobre recursos
 //post: crear nuevos recursos
@@ -55,6 +69,9 @@ app.put('/api/pacientes/:id',(req, res) => {
   
   res.status(200).send({message:'character actualizado',data:pacientes[pacienteIdx]})
 })
+
+await synsSchema() //genera la base de datos con la estructura que nosotros le indicamos. NUNCA EN PRODUCCION
+
 
 app.listen(4200, () => {
   console.log("server running on port 4200");
