@@ -3,13 +3,14 @@ import { SqlHighlighter } from "@mikro-orm/sql-highlighter";
 
 export const orm = await MikroORM.init({
     entities: ['dist/**/*.entity.js'],
-    dbName: 'turnos',
+    dbName: 'dsw',
     user: 'root',
-    password: '1234',
+    password: 'Rosariocentral19',
     host: 'localhost',
     port: 3306,
-    clientUrl: 'mysql://root:1234@localhost:3306/turnos',
+    clientUrl: 'mysql://root:1234@localhost:3306/dsw',
     highlighter: new SqlHighlighter(),
+    
     schemaGenerator: { // nunca en produccion
         disableForeignKeys: true,
         createForeignKeyConstraints: true,
