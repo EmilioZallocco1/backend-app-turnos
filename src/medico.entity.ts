@@ -1,13 +1,8 @@
-import {
-    Entity,
-    PrimaryKey,
-    Property,
-    OneToMany,
-    Collection,
-  } from '@mikro-orm/core';
-
+import {Entity,PrimaryKey,Property,OneToMany,Collection,ManyToOne, Rel} from '@mikro-orm/core';
+import { Especialidad } from './especialidad.entity.js';
+import { ObraSocial } from './obraSocial.entity.js';
+import { Turno } from './turno.entity.js';
 //import { Horario } from './Horario'; // Importa la entidad Horario
-//import { Turno } from './Turno'; // Importa la entidad Turno
 
 @Entity()
 export class Medico {
@@ -17,8 +12,8 @@ export class Medico {
   @Property()
   nombre!: string;
 
-  @Property()
-  especialidad!: string;
+  @ManyToOne(()=> Especialidad,{nullable:false})
+  especialidad!: Rel<Especialidad>
 
   @Property()
   email!: string;
@@ -26,9 +21,18 @@ export class Medico {
   @Property()
   telefono!: string;
 
-//   @OneToMany(() => Horario, (horario) => horario.doctor)
+  @ManyToOne(()=> ObraSocial,{nullable:false})
+  obraSocial!: Rel<ObraSocial>
+
+  @OneToMany(() => Turno, (turno) => turno.medico)
+  turnos = new Collection<Turno>(this);
+
+
+//   @OneToMany(() => Horario, (horario) => horario.medico)
 //   horarios = new Collection<Horario>(this);
 
-//   @OneToMany(() => Turno, (turno) => turno.doctor)
+//   @OneToMany(() => Turno, (turno) => turno.medico)
 //   turnos = new Collection<Turno>(this);
+
+
 }

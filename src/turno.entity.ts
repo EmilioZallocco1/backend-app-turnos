@@ -1,6 +1,6 @@
-import { Entity, PrimaryKey, Property, ManyToOne } from '@mikro-orm/core';
-// import { Doctor } from './Doctor'; // Importa la entidad Doctor
-// import { Paciente } from './Paciente'; // Importa la entidad Paciente
+import { Entity, PrimaryKey, Property, ManyToOne, Rel } from '@mikro-orm/core';
+import { Medico } from './medico.entity.js';
+import { Paciente } from './paciente.entity.js';
 
 @Entity()
 export class Turno {
@@ -13,12 +13,19 @@ export class Turno {
   @Property()
   hora!: string; // Hora como string (formato HH:mm), puedes usar otro tipo si prefieres manejar tiempos de otra manera
 
-//   @ManyToOne(() => Doctor)
-//   doctor!: Doctor;
-
-//   @ManyToOne(() => Paciente)
-//   paciente!: Paciente;
 
   @Property()
   estado!: string; // Estado del turno (Pendiente, Confirmado, Cancelado, etc.)
+
+  @Property()
+  descripcion!: string; // Descripción del turno (motivo de la consulta, diagnostico, etc.)
+
+  @ManyToOne (()=>Medico,{nullable:false}) // Relaciona con la entidad Medico 1 a N
+  medico !: Rel<Medico>
+
+  @ManyToOne (()=>Paciente,{nullable:false}) // Relaciona con la entidad Paciente 1 a N
+  paciente !: Rel<Paciente>
+
+
+
 }

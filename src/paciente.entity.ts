@@ -1,6 +1,6 @@
-import { Entity, PrimaryKey, Property, OneToMany, Collection } from '@mikro-orm/core';
-//import { Turno } from './Turno';  // Importa la entidad Turno si existe en tu proyecto
-
+import { Entity, PrimaryKey, Property, OneToMany, Collection, ManyToOne, Rel, Cascade } from '@mikro-orm/core';
+import { ObraSocial } from './obraSocial.entity.js';
+import { Turno } from './turno.entity.js';
 @Entity()
 export class Paciente {
 
@@ -19,6 +19,10 @@ export class Paciente {
   @Property()
   telefono!: string;
 
-//   @OneToMany(() => Turno, turno => turno.paciente)
-//   turnos = new Collection<Turno>(this);
+  @ManyToOne(()=>ObraSocial,{nullable:false})
+  obraSocial!: Rel<ObraSocial>;
+
+  @OneToMany(()=>Turno,turno=>turno.paciente,{cascade: [Cascade.ALL]})
+  turnos = new Collection<Turno>(this);
+
 }
